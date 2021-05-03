@@ -2,21 +2,21 @@
 
 # step 1
 OpenServer\domains
-git clone https://github.com/davbadalyan/testapp.git
+git clone https://github.com/davbadalyan/testapp.git <br>
 cd testapp
 
-#step 2
+# step 2
 OpenServer\domains\testapp
 create a new file - .env, and copy content from .env.example
 add db configurations
 
-#step 3
+# step 3
 composer install
 
-#step 4
+# step 4
 php artisan key:generate
 
-#step 5
+# step 5
 php artisan migrate
 
 
