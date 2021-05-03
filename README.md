@@ -1,3 +1,26 @@
+## How to install
+
+# step 1
+OpenServer\domains
+git clone https://github.com/davbadalyan/testapp.git
+cd testapp
+
+#step 2
+OpenServer\domains\testapp
+create a new file - .env, and copy content from .env.example
+add db configurations
+
+#step 3
+composer install
+
+#step 4
+php artisan key:generate
+
+#step 5
+php artisan migrate
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
