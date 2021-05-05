@@ -22,7 +22,9 @@ class TodoController extends Controller
         // dd($query);
         if ($query)
             $todos = Todo::where("title", "like", "%$query%");
-        else $todos = Todo::query();
+        else {
+            $todos = Todo::query();
+        }
         // dd($todos);
 
         if ($sort == "up")
