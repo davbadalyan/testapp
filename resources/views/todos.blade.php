@@ -5,7 +5,7 @@
         <h1>Todos</h1>
 
         <form action="?" method="GET">
-            <input type="text" name="query"  value="{{ request()->get('query') }}">
+            <input type="text" name="query" value="{{ request()->get('query') }}">
             <button class="btn btn-primary">Search</button>
         </form>
         <table class="table">
@@ -13,10 +13,15 @@
                 <tr>
                     <th>
                         Id
-                        <a href="?sort=up">Up</a>
-                        <a href="?sort=down">Down</a>
+                        <a href="?sort=upId">Up</a>
+                        <a href="?sort=downId">Down</a>
                     </th>
-                    <th>Title</th>
+                    <th>
+                        Title
+                        <a href="?sort=upTitle">Up</a>
+                        <a href="?sort=downTitle">Down</a>
+                    </th>
+                    <th>Category</th>
                     <th>Created_at</th>
                     <th>Updated_at</th>
                     {{-- <th>Complated</th> --}}
@@ -27,6 +32,7 @@
                     <tr>
                         <td>{{ $todo->id }}</td>
                         <td>{{ $todo->title }}</td>
+                        <td>{{ $todo->category->title }}</td>
                         <td>{{ $todo->created_at }}</td>
                         <td>{{ $todo->updated_at }}</td>
                         {{-- <td>{{ $todo->complated }}</td> --}}

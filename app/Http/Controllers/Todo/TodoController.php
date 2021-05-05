@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Todo;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Todo;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
@@ -17,23 +18,43 @@ class TodoController extends Controller
      */
     public function index(Request $request)
     {
-        $query = $request->get("query", false);
-        $sort = $request->get("sort", "up");
-        // dd($query);
-        if ($query)
-            $todos = Todo::where("title", "like", "%$query%");
-        else {
-            $todos = Todo::query();
-        }
-        // dd($todos);
+        // $query = $request->get("query", false);
+        // $sort = $request->get("sort", "up");
+        // // dd($query);
+        // if ($query) {
+        //     // $todos = Todo::where("title", "like", "%$query%");
+        //     $todos = Todo::where("id", "like", "%$query%");
+        //     $todos->orWhere("title", "like", "%$query%");
+        // } else {
+        //     $todos = Todo::query();
+        // }
+        // // dd($todos);
 
-        if ($sort == "up")
-            $todos->orderBy("id", "asc");
-        else $todos->orderBy("id", "desc");
+        // if ($sort == "upId")
+        //     $todos->orderBy("id", "asc");
+        // else if ($sort == "downId")
+        //     $todos->orderBy("id", "desc");
+        // else if ($sort == "upTitle")
+        //     $todos->orderBy("title", "asc");
+        // else if ($sort == "downTitle")
+        //     $todos->orderBy("title", "desc");
 
-        $todos = $todos->get();
+        // // dd($todos->toSql());
+        // $todos = $todos->get();
 
-        return view("todos")->with(["todos" => $todos]);
+        // $todo = $todos->first();
+        // $todos = Todo::with(["category"])->get();
+        $todos = Todo::find(1);
+
+        // if(true){
+            $todos->load("category");
+        // }
+
+        // dd(Category::with("todos")->first());
+        // $categories = Category::all();
+        dd($todos);
+
+        // return view("todos")->with(["todos" => $todos]);
     }
 
     /**

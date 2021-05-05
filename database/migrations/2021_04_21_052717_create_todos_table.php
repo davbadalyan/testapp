@@ -15,8 +15,10 @@ class CreateTodosTable extends Migration
     {
         Schema::create('todos', function (Blueprint $table) {
             $table->tinyIncrements("id");
+            $table->bigInteger("category_id")->unsigned();
 
-            // $table->timestamps();
+            $table->foreign("category_id")->references("id")->on("categories")->onDelete("cascade")->onUpdate("cascade");
+            $table->timestamps();
         });
     }
 
