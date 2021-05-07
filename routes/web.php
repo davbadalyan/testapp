@@ -19,7 +19,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/todos', [App\Http\Controllers\Todo\TodoController::class, 'index'])->name('todos');
+// Route::get('/todos', [App\Http\Controllers\Todo\TodoController::class, 'index'])->name('todos');
+
+// Route::get('/todo/create', [App\Http\Controllers\Todo\TodoController::class, 'create']);
+
+Route::resource("todos", App\Http\Controllers\Todo\TodoController::class);
 

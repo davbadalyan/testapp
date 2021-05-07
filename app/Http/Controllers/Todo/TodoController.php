@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Todo;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TodoCreateRequest;
 use App\Models\Category;
 use App\Models\Todo;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\Validator;
 
 class TodoController extends Controller
 {
@@ -18,43 +19,31 @@ class TodoController extends Controller
      */
     public function index(Request $request)
     {
-        // $query = $request->get("query", false);
-        // $sort = $request->get("sort", "up");
-        // // dd($query);
-        // if ($query) {
-        //     // $todos = Todo::where("title", "like", "%$query%");
-        //     $todos = Todo::where("id", "like", "%$query%");
-        //     $todos->orWhere("title", "like", "%$query%");
-        // } else {
-        //     $todos = Todo::query();
-        // }
-        // // dd($todos);
+        $query = $request->get("query", false);
+        $sort = $request->get("sort", "up");
+        // dd($query);
+        if ($query) {
+            // $todos = Todo::where("title", "like", "%$query%");
+            $todos = Todo::with("category")->where("id", "like", "%$query%");
+            $todos->orWhere("title", "like", "%$query%");
+        } else {
+            $todos = Todo::with("category");
+        }
+        // dd($todos);
 
-        // if ($sort == "upId")
-        //     $todos->orderBy("id", "asc");
-        // else if ($sort == "downId")
-        //     $todos->orderBy("id", "desc");
-        // else if ($sort == "upTitle")
-        //     $todos->orderBy("title", "asc");
-        // else if ($sort == "downTitle")
-        //     $todos->orderBy("title", "desc");
+        if ($sort == "upId")
+            $todos->orderBy("id", "asc");
+        else if ($sort == "downId")
+            $todos->orderBy("id", "desc");
+        else if ($sort == "upTitle")
+            $todos->orderBy("title", "asc");
+        else if ($sort == "downTitle")
+            $todos->orderBy("title", "desc");
 
-        // // dd($todos->toSql());
-        // $todos = $todos->get();
+        // dd($todos->toSql());
+        $todos = $todos->get();
 
-        // $todo = $todos->first();
-        // $todos = Todo::with(["category"])->get();
-        $todos = Todo::find(1);
-
-        // if(true){
-            $todos->load("category");
-        // }
-
-        // dd(Category::with("todos")->first());
-        // $categories = Category::all();
-        dd($todos);
-
-        // return view("todos")->with(["todos" => $todos]);
+        return view("todos.index")->with(["todos" => $todos]);
     }
 
     /**
@@ -64,18 +53,22 @@ class TodoController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+
+        return view("todos.create")->with(compact("categories"));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\TodoCreateRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TodoCreateRequest $request)
     {
-        //
+        Todo::create($request->all());
+
+        return back()->withSuccess("created");
     }
 
     /**
